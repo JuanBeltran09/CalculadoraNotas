@@ -4,7 +4,7 @@ from wtforms.fields.numeric import IntegerField
 import pandas as pd
 
 
-class numForm(Form):
+class subjectForm(Form):
     name =StringField('Nombre')
     mark = IntegerField('Notas')
 
