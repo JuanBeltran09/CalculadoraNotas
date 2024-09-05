@@ -6,7 +6,7 @@ import pandas as pd
 
 class subjectForm(Form):
     name =StringField('Nombre')
-    mark = IntegerField('Notas')
+    note = IntegerField('Notas')
 
 def readSubjects():
     df = pd.read_csv("data_notas.csv")
