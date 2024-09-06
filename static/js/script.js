@@ -1,10 +1,35 @@
 document.addEventListener('DOMContentLoaded', function () {
     const addNoteButton = document.getElementById('addNote');
     const notesContainer = document.getElementById('notesContainer');
+    const finalNoteInput = document.getElementById('finalNote');
+    const nameSubjectInput = document.getElementById('nameSubject');
+    const finalNoteButton = document.getElementById('finalNoteButton');
     const form = document.querySelector('form');
     const errorMessage = document.createElement('div');
     errorMessage.style.color = 'red';
     notesContainer.insertAdjacentElement('afterend', errorMessage);
+
+    finalNoteButton.addEventListener('click', function () {
+        calculateFinalNote()
+    });
+    function calculateFinalNote() {
+        const porcentajeFields = document.querySelectorAll('.porcentaje-field');
+        const notaFields = document.querySelectorAll('.nota-field');
+        let totalPercentage = 0;
+        let finalGrade = 0;
+
+        // Recorre los campos de notas y porcentajes
+        porcentajeFields.forEach(function (field, index) {
+            const porcentaje = parseFloat(field.value) || 0;
+            const nota = parseFloat(notaFields[index].value) || 0;
+            totalPercentage += porcentaje;
+
+            // Calcula la nota ponderada por porcentaje
+            finalGrade += (nota * (porcentaje / 100));
+        });
+
+        finalNoteInput.value = finalGrade.toFixed(2)
+    }
 
     addNoteButton.addEventListener('click', function () {
         const noteField = `
@@ -17,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>`;
 
         notesContainer.insertAdjacentHTML('beforeend', noteField);
+        finalNoteInput.value = ''
 
     });
     notesContainer.addEventListener('click', function (event) {
@@ -28,9 +54,11 @@ document.addEventListener('DOMContentLoaded', function () {
     notesContainer.addEventListener('input', function (event) {
         if (event.target.classList.contains('nota-field') || event.target.classList.contains('porcentaje-field')) {
             validateNumberInput(event);
+            finalNoteInput.value = ''
         }
         if (event.target.classList.contains('porcentaje-field')) {
             validatePercentageSum();
+            finalNoteInput.value = ''
         }
     });
     function validateNumberInput(event) {
@@ -56,6 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
             errorMessage.textContent = '';
         }
     }
+
     form.addEventListener('submit', function (event) {
         const porcentajeFields = document.querySelectorAll('.porcentaje-field');
         let totalPercentage = 0;
@@ -67,6 +96,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if (totalPercentage !== 100) {
             event.preventDefault();  // Evita el envío del formulario
             errorMessage.textContent = "La suma total de los porcentajes debe ser exactamente 100%.";
+        }
+        else if (nameSubjectInput.value === ''){
+            event.preventDefault();  // Evita el envío del formulario
+            errorMessage.textContent = "Debes poner nombre a la asignatura";
+        }
+        else if(finalNoteInput.value === ''){
+            calculateFinalNote()
         }
     });
 });

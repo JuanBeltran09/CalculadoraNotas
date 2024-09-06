@@ -9,12 +9,12 @@
 <body>
 
 
-    <form subjectForm method="POST" action="/add">
+    <form method="POST" action="/add">
         <div class="full-height">
             <div class="mb-3">
                 <div class="input-group mb-3">
                     <span class="input-group-text">Nombre de la Asignatura</span>
-                    <input type="text" class="form-control" id="formGroupExampleInput">
+                    <input type="text" class="form-control" id="nameSubject" name="name">
                 </div>
                 <div id="notesContainer">
                     <div class="input-group mb-3 note-item">
@@ -24,6 +24,10 @@
                         <input type="text" aria-label="Last name" class="form-control porcentaje-field">
                         <button class="btn btn-danger removeNote" type="button">Quitar Nota</button>
                     </div>
+                </div>
+                <div class="input-group mb-3">
+                    <button type="button" class="btn btn-primary" id="finalNoteButton">Nota Final</button>
+                    <input type="text" aria-label="Final Note" class="form-control" id="finalNote" name="note" readonly>
                 </div>
                 <div class="content mt-3">
                     <button type="button" id="addNote" class="btn btn-secondary">Agregar Nota</button>

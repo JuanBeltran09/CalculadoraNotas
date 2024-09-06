@@ -15,9 +15,13 @@ df = sub.readSubjects()
 @app.route('/add', methods=['GET', 'POST'])
 def add():
 
-    subjectForm = sub.subjectForm(request.form)
+    if request.method == 'POST':
+        nameSubject = request.form['name']
+        note = request.form['note']
 
-    return render_template('updateData.html', subjectForm=subjectForm)
+        sub.addSubjects(df,nameSubject,note)
+
+    return render_template('updateData.html')
 
 @app.route('/update', methods=['GET', 'POST'])
 def update():
